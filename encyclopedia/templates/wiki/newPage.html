@@ -1,0 +1,18 @@
+{% extends "wiki/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+   
+{% block body %}
+<h1>Teste</h1> 
+<form action="{% url 'newPage' %}" method="post">
+    {% csrf_token %}
+    {{ newPageForm }}
+    <div><input type="submit" value="Save"></div>
+</form>
+<a href="{% url 'index' %}">View Pages</a>
+
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "wiki/layout.html" %}
+
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+        
+    <ul>
+        {{ page|safe }}
+        <a href="{% url 'index' %}">GO HOME</a>
+    </ul>
+
+{% endblock %}
+
+
+
+
+
