@@ -1,22 +1,22 @@
 {% extends "wiki/layout.html" %}
 
 {% block title %}
-    Encyclopedia
+Encyclopedia
 {% endblock %}
 
 {% block body %}
 
-        {%if notice %}
-            <h2 style="padding-top: 30px;">  "{{ title }}" {{ notice }}</h2>
-            {%if locallis %}
-                <h1>You meant to search for: {{locallis}} ?</h1>
-            {% endif %}
-        {% endif %}
+{%if notice %}
+<h2 style="padding-top: 30px;"> "{{ title }}" {{ notice }}</h2>
+{%if locallis %}
+<h1>You meant to search for: {{locallis}} ?</h1>
+{% endif %}
+{% endif %}
 
-        <h1>All available Pages</h1>
-        <ul>
-            {% for entry in entries %}
-            <li><a href="wiki/{{entry}}">{{ entry }}</li></a>
-            {% endfor %}
-        </ul>
+<h1>All available Pages </h1>
+<ul>
+    {% for entry in entries %}
+    <li><a href="wiki/{{entry}}">{{ entry }}</li></a>
+    {% endfor %}
+</ul>
 {% endblock %}
