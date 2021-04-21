@@ -107,3 +107,9 @@ def newPage(request):
         "newPageForm": NewPageForm(),
         "randomPage": randoness().randoInst2(),
     })
+
+
+def editpage(request, pagename):
+    return render(request, "wiki/editpage.html", {
+        "pagename": pagename
+    })

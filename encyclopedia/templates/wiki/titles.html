@@ -2,20 +2,15 @@
 
 
 {% block title %}
-    {{title}}
+{{title}}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ title }}</h1>
-        
-    <ul>
-        {{ page|safe }}
-        <a href="{% url 'index' %}">GO HOME</a>
-    </ul>
+<h1>{{ title }}</h1>
 
+<ul>
+    {{ page|safe }}
+    <a href="{% url 'index' %}">GO HOME</a>
+</ul>
+<a href="{{title}}/editpage">Edit Page</a>
 {% endblock %}
-
-
-
-
-
