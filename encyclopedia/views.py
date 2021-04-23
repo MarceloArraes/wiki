@@ -10,15 +10,9 @@ from . import util
 
 
 class NewPageForm(forms.Form):
-    title = forms.CharField(label="title")
-    body = forms.CharField(widget=forms.Textarea(), label="body")
-
-
-class pageeditclass(forms.Form):
-    body = forms.CharField(widget=forms.Textarea(), label="body")
-
-    def pageedite(self, page):
-        return util.get_entry(page)
+    title = forms.CharField(label="title", initial='')
+    body = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form-control col-md-8 col-lg-8', 'rows': 10}), label='')
 
 
 class randoness():
@@ -38,22 +32,6 @@ class randoness():
 
         txt2 = "{randomized}".format(randomized=randomizedTitle)
         return txt2
-
-
-def editpage(request, pagename):
-    if request.method == "POST":
-        form = pageeditclass(request.POST)
-        if form.is_valid():
-            titleo = pagename
-            bodyo = form.cleaned_data["body"]
-            print("form valid")
-            util.save_entry(titleo, bodyo)
-            return HttpResponseRedirect(reverse("index"))
-    return render(request, "wiki/editpage.html", {
-        "pagename": pagename,
-        "pageeditclass": pageeditclass().pageedite(pagename),
-        "pageeditform": pageeditclass()
-    })
 
 
 def index(request):
@@ -116,12 +94,22 @@ def newPage(request):
                     "title": form.cleaned_data["title"].upper(),
                     "randomPage": randoness().randoInst2(),
                 })
-            # with open(f'entries/{titleo}.md', 'bw+') as f:
-                # f.write('# {}\n'.format(titleo).encode('utf-8'))
-                #f.write('* {}\n'.format(bodyo).encode('utf-8'))
             util.save_entry(titleo, bodyo)
             return HttpResponseRedirect(f"{titleo}")
     return render(request, "wiki/newPage.html", {
         "newPageForm": NewPageForm(),
         "randomPage": randoness().randoInst2(),
+    })
+
+
+def editpage(request, pagename):
+    form = NewPageForm()
+    entrada = util.get_entry(pagename)
+    form.fields['body'].initial = entrada
+    form.fields["title"].initial = pagename
+    form.fields["title"].widget = forms.HiddenInput()
+    print(form.fields['body'].initial)
+    return render(request, "wiki/newPage.html", {
+        "form": form,
+        "pagename": pagename,
     })

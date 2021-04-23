@@ -6,11 +6,10 @@
 {% endblock %}
 
 {% block body %}
-<h1>{{ title }}</h1>
+<h1>Subject: {{ title }}</h1>
 
-<ul>
-    {{ page|safe }}
-    <a href="{% url 'index' %}">GO HOME</a>
-</ul>
-<a href="{{title}}/editpage">Edit Page</a>
+{{ page|safe }}
+<a href="{% url 'index' %}">GO HOME</a>
+
+<a href="{{title}}/editpage" method="post">Edit Page</a>
 {% endblock %}
