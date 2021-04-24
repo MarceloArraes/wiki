@@ -13,6 +13,8 @@ class NewPageForm(forms.Form):
     title = forms.CharField(label="title", initial='')
     body = forms.CharField(widget=forms.Textarea(
         attrs={'class': 'form-control col-md-8 col-lg-8', 'rows': 10}), label='')
+    edition = forms.BooleanField(widget=forms.HiddenInput(),
+                                 initial=False, label="edition", required=False)
 
 
 class randoness():
@@ -89,7 +91,8 @@ def newPage(request):
         if form.is_valid():
             titleo = form.cleaned_data["title"]
             bodyo = form.cleaned_data["body"]
-            if util.get_entry(form.cleaned_data["title"]) != None:
+            edit = form.cleaned_data["edition"]
+            if util.get_entry(form.cleaned_data["title"]) != None and not edit:
                 return render(request, "wiki/errorpage.html", {
                     "title": form.cleaned_data["title"].upper(),
                     "randomPage": randoness().randoInst2(),
@@ -107,8 +110,7 @@ def editpage(request, pagename):
     entrada = util.get_entry(pagename)
     form.fields['body'].initial = entrada
     form.fields["title"].initial = pagename
-    form.fields["title"].widget = forms.HiddenInput()
-    print(form.fields['body'].initial)
+    form.fields["edition"].initial = True
     return render(request, "wiki/newPage.html", {
         "form": form,
         "pagename": pagename,
